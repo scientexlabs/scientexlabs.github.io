@@ -401,41 +401,95 @@
             </section>
             <!-- google-map-section end -->
 
+<!-- contact-section -->
+<section class="contact-section pt_120 pb_180">
+    <div class="auto-container">
+        <div class="sec-title centred mb_70 sec-title-animation animation-style2">
+            <span class="sub-title mb_20 title-animation">Send Message</span>
+            <h2 class="title-animation">Get in Touch</h2>
+        </div>
 
-            <!-- contact-section -->
-            <section class="contact-section pt_120 pb_180">
-                <div class="auto-container">
-                    <div class="sec-title centred mb_70 sec-title-animation animation-style2">
-                        <span class="sub-title mb_20 title-animation">Send Message</span>
-                        <h2 class="title-animation">Get in Touch</h2>
+        <!-- Success Message -->
+        <div id="form-success" style="display:none;" class="alert alert-success" role="alert">
+            ✅ Thank you! Your message has been sent successfully.
+        </div>
+
+        <div class="form-inner">
+            <form action="https://formspree.io/f/movdqedn" method="POST" id="contact-form">
+                <div class="row clearfix">
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="text" name="username" placeholder="Your name" required>
                     </div>
-                    <div class="form-inner">
-                        <form method="post" action="sendemail.php" id="contact-form">
-                            <div class="row clearfix">
-                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                    <input type="text" name="username" placeholder="Your name" required>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                    <input type="email" name="email" placeholder="Your email" required>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                    <input type="text" name="phone" placeholder="Phone" required>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12 form-group">
-                                    <input type="text" name="subject" placeholder="Subject" required>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 form-group">
-                                    <textarea name="message" placeholder="Type message"></textarea>
-                                </div>
-                                <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
-                                    <button type="submit" class="theme-btn" name="submit-form">Ask Question<span></span><span></span><span></span><span></span></button>
-                                </div>
-                            </div>
-                        </form>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="email" name="email" placeholder="Your email" required>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="text" name="phone" placeholder="Phone" required>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 form-group">
+                        <input type="text" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group">
+                        <textarea name="message" placeholder="Type message" required></textarea>
+                    </div>
+
+                    <!-- Honeypot -->
+                    <div style="display:none;">
+                        <input type="text" name="_gotcha">
+                    </div>
+
+                    <!-- Hidden Subject -->
+                    <input type="hidden" name="_subject" value="New Contact Form Submission">
+
+                    <!-- Redirect to thank you with JS handling -->
+                    <input type="hidden" name="_next" value="#">
+
+                    <div class="col-lg-12 col-md-12 col-sm-12 form-group message-btn centred">
+                        <button type="submit" class="theme-btn" name="submit-form">
+                            Ask Question
+                            <span></span><span></span><span></span><span></span>
+                        </button>
                     </div>
                 </div>
-            </section>
-            <!-- contact-section end -->
+            </form>
+        </div>
+    </div>
+</section>
+<!-- contact-section end -->
+
+<!-- Success Message Handler Script -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("contact-form");
+    const successBox = document.getElementById("form-success");
+
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        form.reset();
+        successBox.style.display = "block";
+        successBox.scrollIntoView({ behavior: "smooth" });
+
+        // Auto-hide after 5 seconds
+        setTimeout(() => {
+          successBox.style.display = "none";
+        }, 5000);
+      } else {
+        alert("❌ Something went wrong. Please try again later.");
+      }
+    });
+  });
+</script>
+
 
 
             <!-- cta-style-two -->
